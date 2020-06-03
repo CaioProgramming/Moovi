@@ -15,15 +15,14 @@ class MoviePresenter(private val viewImpl: MvpContract.ViewImpl) : MvpContract.P
         viewImpl.showSimilarMovies(movies)
     }
 
-    fun findMovie() {
+    fun findMovie(id: Int, findSimilar: Boolean) {
         viewImpl.showLoad(true)
-        movieModel.loadMovie()
+        movieModel.loadMovie(id, findSimilar)
     }
 
 
-    override fun getMovie(movie: Movie) {
+    override fun getMovieData(movie: Movie) {
         viewImpl.showMovieData(movie)
-        movieModel.loadSimilarMovies(movie.id)
         viewImpl.showLoad(false)
     }
 

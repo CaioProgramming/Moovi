@@ -1,78 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
         <variable
             name="movie"
             type="com.ilustris.moovify.model.Movie" />
     </data>
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/topshimmer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:shimmer_auto_start="true"
-        app:shimmer_base_color="?android:textColorHint"
-        app:shimmer_colored="true"
-        app:shimmer_direction="left_to_right"
-        app:shimmer_duration="1300"
-        app:shimmer_highlight_color="@color/colorPrimary"
-        app:shimmer_repeat_mode="reverse"
-        app:shimmer_shape="linear">
 
-        <RelativeLayout
-            android:id="@+id/movieCard"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/movieCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/moviePicture"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="4dp"
+            android:contentDescription="@string/movie_picture_description"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@id/moviePicture"
             android:orientation="vertical">
 
+            <com.google.android.material.textview.MaterialTextView
 
-            <ImageView
-
-                android:id="@+id/moviePicture"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="4dp"
-                android:contentDescription="@string/movie_picture_description"
-                android:scaleType="fitCenter"
-                android:src="@drawable/endgame" />
-
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:layout_toEndOf="@id/moviePicture"
-                android:orientation="vertical">
+                android:text="@{movie.title}"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp" />
 
-                <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/movieDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{movie.title}"
-                    android:textColor="?android:textColorPrimary"
-                    android:textSize="16sp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/movieDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+        </LinearLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_alignBottom="@id/moviePicture"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/moviePicture"
-                android:alpha="0.10"
-                android:background="?android:textColorPrimary" />
-        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/moviePicture"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/moviePicture"
+            android:alpha="0.10"
+            android:background="?android:textColorPrimary" />
+    </RelativeLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
 </layout>

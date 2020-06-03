@@ -2,12 +2,11 @@ package com.ilustris.moovi.model.contract
 
 import android.view.View
 import androidx.viewbinding.ViewBinding
-import com.ilustris.moovi.model.Genre
 import com.ilustris.moovify.model.Movie
 
 interface MvpContract {
     interface ModelImpl {
-        fun loadMovie()
+        fun loadMovie(id: Int, findSimilarMovies: Boolean)
         fun loadSimilarMovies(id: Int)
     }
 
@@ -15,7 +14,7 @@ interface MvpContract {
     interface PresenterImpl {
         val view: View
         fun getSimilarMovies(movies: List<Movie>)
-        fun getMovie(movie: Movie)
+        fun getMovieData(movie: Movie)
     }
 
     interface ViewImpl {
@@ -25,7 +24,4 @@ interface MvpContract {
         fun showSimilarMovies(movies: List<Movie>)
     }
 
-    interface AdapterImpl {
-        fun movieGenres(genres: List<Genre>)
-    }
 }

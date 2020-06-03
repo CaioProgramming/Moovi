@@ -1,9 +1,11 @@
 package com.ilustris.moovi.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -33,51 +35,58 @@ class SimilarMoviesAdapter(val context: Context, val movies: List<Movie>?) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val movieBind: MovieCardBinding = (holder as MovieHolder).movieCardBinding
+        val movieCardBinding: MovieCardBinding = (holder as MovieHolder).movieCardBinding
         val movie = movies?.get(position)
-        movie?.let {
-            movieBind.movie = movie
-            movieBind.movieDetails.text =
-                "${Utils.convertDate(movie.release_date)} ${getmovieGenres(movie, movieBind)}"
 
-            Glide.with(context).load(NetworkUtils.postersPath + movie.poster_path)
-                .into(movieBind.moviePicture)
+        movie?.let {
+            movieCardBinding.movie = movie
+            //loadPoster(movie.poster_path,movieCardBinding.moviePicture)
+            val inAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
+            movieCardBinding.movieCard.startAnimation(inAnimation)
+            Thread(Runnable {
+                getMovieGenres(it, movieCardBinding)
+            }).start()
         }
-        val inAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
-        movieBind.movieCard.startAnimation(inAnimation)
 
 
     }
 
+    fun updateMovieInfo(movie: Movie, genres: String, movieCardBinding: MovieCardBinding) {
+        movieCardBinding.movie = movie
+        movieCardBinding.movieDetails.text = "${Utils.convertDate(movie.release_date)} $genres"
+        loadPoster(NetworkUtils.postersPath + movie.poster_path, movieCardBinding.moviePicture)
+    }
 
-    private fun getmovieGenres(movie: Movie, movieCardBinding: MovieCardBinding): String {
-        var genres = ""
+
+    fun loadPoster(url: String, imageView: ImageView) {
+        Glide.with(context).load(url).error(R.drawable.ic_clapperboard).into(imageView)
+    }
+
+    private fun getMovieGenres(movie: Movie, movieCardBinding: MovieCardBinding) {
         MoviePresenter(object : MvpContract.ViewImpl {
             override fun viewBinding(): ViewBinding {
                 return movieCardBinding
             }
 
             override fun showLoad(load: Boolean) {
-                if (load) movieCardBinding.topshimmer.startShimmer() else movieCardBinding.topshimmer.stopShimmer()
+                Log.i("MoviesAdapter", "loading? $load")
             }
 
             override fun showMovieData(movie: Movie) {
-                TODO("Not yet implemented")
+                movie.genres.let {
+                    var genres = ""
+                    for (i in it.indices) {
+                        val g = movie.genres[i]
+                        genres += g.name
+                        if (i < movie.genres.size - 1) genres += ", "
+                    }
+                    updateMovieInfo(movie, genres, movieCardBinding)
+                }
             }
 
-            override fun showSimilarMovies(movies: List<Movie>) {
-                TODO("Not yet implemented")
-            }
-        })
-        movie.genres.let {
-            for (i in 0..movie.genres.size) {
-                val g = movie.genres[i]
-                genres += g.name
-                if (i != movie.genres.size - 1) genres += ","
-            }
-        }
+            override fun showSimilarMovies(movies: List<Movie>) {}
+        }).findMovie(movie.id, false)
 
-        return genres
     }
 
     class MovieHolder(val movieCardBinding: MovieCardBinding) :

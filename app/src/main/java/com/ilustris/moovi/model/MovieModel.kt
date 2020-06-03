@@ -11,8 +11,7 @@ import retrofit2.Response
 class MovieModel(val presenterImpl: MvpContract.PresenterImpl) : MvpContract.ModelImpl {
 
 
-    override fun loadMovie() {
-        val movieID = 299534
+    override fun loadMovie(movieID: Int, findSimilarMovies: Boolean) {
         val call = MovieService().getMovie().movie(movieID.toString())
         Log.d(this.javaClass.simpleName, "Making call...")
         call.enqueue(object : Callback<Movie?> {
@@ -25,7 +24,10 @@ class MovieModel(val presenterImpl: MvpContract.PresenterImpl) : MvpContract.Mod
                 Log.d("Callback", "called ${response.raw().request().url()}")
 
                 response.body()?.let {
-                    presenterImpl.getMovie(it)
+                    presenterImpl.getMovieData(it)
+                    if (findSimilarMovies) {
+                        loadSimilarMovies(it.id)
+                    }
                 }
             }
 

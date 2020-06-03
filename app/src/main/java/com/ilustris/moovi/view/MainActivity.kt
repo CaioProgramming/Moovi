@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), MvpContract.ViewImpl {
         setContentView(viewBinding().root)
         val moviePresenter = MoviePresenter(this)
         showLoad(true)
-        moviePresenter.findMovie()
+        moviePresenter.findMovie(299534, true)
 
     }
 
@@ -40,11 +40,12 @@ class MainActivity : AppCompatActivity(), MvpContract.ViewImpl {
         val handler = Handler()
         handler.postDelayed({
             if (load) topshimmer.startShimmer() else topshimmer.hideShimmer()
-        }, 2000)
+        }, 3000)
     }
 
     override fun showMovieData(movie: Movie) {
-        Glide.with(this).load(postersPath + movie.poster_path).into(moviePicture)
+        Glide.with(this).load(postersPath + movie.poster_path).error(R.drawable.ic_clapperboard)
+            .into(moviePicture)
         movieName.text = movie.title
         moviePopularity.text = "${movie.popularity} views"
         movieLikes.text = "${movie.vote_average} likes"
