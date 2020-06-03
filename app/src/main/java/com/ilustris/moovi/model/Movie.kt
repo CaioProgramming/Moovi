@@ -1,9 +1,12 @@
 package com.ilustris.moovify.model
 
+import com.ilustris.moovi.model.Genre
+
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
+    val genres: List<Genre>,
     val id: Int,
     val original_language: String,
     val original_title: String,
