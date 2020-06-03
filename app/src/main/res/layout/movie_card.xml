@@ -15,6 +15,16 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
+        <CheckBox
+            android:id="@+id/movieCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:button="@drawable/check"
+            android:buttonTint="?android:textColorPrimary"
+            android:checked="true" />
+
 
         <ImageView
             android:id="@+id/moviePicture"
@@ -30,6 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_margin="8dp"
             android:layout_toEndOf="@id/moviePicture"
+            android:layout_toStartOf="@id/movieCheck"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
