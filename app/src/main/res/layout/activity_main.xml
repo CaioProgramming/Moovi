@@ -14,6 +14,7 @@
         app:shimmer_duration="1300"
         app:shimmer_highlight_color="@color/colorPrimary"
         app:shimmer_repeat_mode="reverse"
+        app:shimmer_clip_to_children="true"
         app:shimmer_shape="linear">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -78,7 +79,6 @@
                             android:layout_centerInParent="true"
                             android:layout_marginStart="8dp"
                             android:layout_toStartOf="@id/favorite"
-                            android:text="Avengers EndGame"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                             android:textStyle="bold" />
                     </RelativeLayout>
@@ -94,8 +94,7 @@
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_favorite_black_24dp"
                             android:drawablePadding="4dp"
-                            android:padding="8dp"
-                            android:text="1.5k likes" />
+                            android:padding="8dp" />
 
                         <TextView
                             android:id="@+id/moviePopularity"
@@ -103,8 +102,7 @@
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_video_library_black_24dp"
                             android:drawablePadding="4dp"
-                            android:padding="8dp"
-                            android:text="205m views" />
+                            android:padding="8dp" />
                     </LinearLayout>
 
 
