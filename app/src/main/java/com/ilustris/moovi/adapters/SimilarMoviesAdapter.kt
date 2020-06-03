@@ -58,7 +58,7 @@ class SimilarMoviesAdapter(val context: Context, val movies: List<Movie>?) :
     }
 
 
-    fun loadPoster(url: String, imageView: ImageView) {
+    private fun loadPoster(url: String, imageView: ImageView) {
         Glide.with(context).load(url).error(R.drawable.ic_clapperboard).into(imageView)
     }
 
