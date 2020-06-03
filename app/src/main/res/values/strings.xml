@@ -2,5 +2,6 @@
     <string name="app_name">Moovi</string>
     <string name="movie_data"> (%d) %s </string>
     <string name="movie_picture_description">Movie poster</string>
+    <string name="back_button_description">back button</string>
 
 </resources>
